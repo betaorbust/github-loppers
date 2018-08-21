@@ -21,7 +21,7 @@ const run = async () => {
             name: 'baseBranch',
             message: `Pick your ${red(
                 'base branch'
-            )}. We'll check if your feature branches can be deleted based on if its changes are found in the ${red(
+            )}. We'll check if your feature branches can be deleted based on if their changesets are found in the ${red(
                 'base branch'
             )}.`,
             source: function(answersSoFar, input) {

@@ -17,7 +17,9 @@
 'use strict';
 const childProcess = require('child_process');
 const assert = require('assert');
-const { red } = require('chalk');
+
+const log = console.log;
+
 // A set of async helper functions for working with arrays
 async function asyncForEach(array, callback) {
     for (let index = 0; index < array.length; index++) {
@@ -94,37 +96,50 @@ async function deleteSquashedMergedBranches(
     const branchesToDelete = await asyncFilter(
         branchNames,
         async branchName => {
-            const [ancestorHash, treeId] = await Promise.all([
-                git(['merge-base', baseBranchName, branchName]),
-                git(['rev-parse', `${branchName}^{tree}`])
-            ]);
-            const danglingCommitId = await git([
-                'commit-tree',
-                treeId,
-                '-p',
-                ancestorHash,
-                '-m',
-                `Temp commit for ${branchName}`
-            ]);
-            const output = await git([
-                'cherry',
-                baseBranchName,
-                danglingCommitId
-            ]);
-            return output.startsWith('-');
+            try {
+                const [ancestorHash, treeId] = await Promise.all([
+                    git(['merge-base', baseBranchName, branchName]),
+                    git(['rev-parse', `${branchName}^{tree}`])
+                ]);
+                const danglingCommitId = await git([
+                    'commit-tree',
+                    treeId,
+                    '-p',
+                    ancestorHash,
+                    '-m',
+                    `Temp commit for ${branchName}`
+                ]);
+                const output = await git([
+                    'cherry',
+                    baseBranchName,
+                    danglingCommitId
+                ]);
+                return output.startsWith('-');
+            } catch (err) {
+                log(
+                    `ERROR RUNNING ANALYSIS ON BRANCH "${branchName}". SKIPPING.`
+                );
+                return Promise.resolve(false);
+            }
         }
     );
+
     if (!actuallyDoIt) {
-        console.log('Listing branches to delete:');
+        log('Listing branches to delete:');
         if (branchesToDelete.length === 0) {
-            console.log(red('No local branches can be safely removed.'));
+            log('No local branches can be safely removed.');
+        } else {
+            branchesToDelete.forEach(branch => {
+                log(branch);
+            });
+            log('\n\n To delete these, you can run the following:');
+            log(`git branch -D ${branchesToDelete.join(' ')}`);
         }
-        console.log(branchesToDelete);
     } else {
         await git(['checkout', baseBranchName]);
         asyncForEach(branchesToDelete, async branchName => {
             const deleted = await git(['branch', '-D', branchName]);
-            console.log(deleted);
+            log(deleted);
             return deleted;
         });
     }
