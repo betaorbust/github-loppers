@@ -15,5 +15,12 @@ module.exports = {
     trailingComma: 'none',
 
     // Controls the printing of spaces inside array and objects
-    bracketSpacing: true
+    bracketSpacing: true,
+
+    overrides: [
+        {
+            files: '*.md',
+            options: { parser: 'markdown', proseWrap: 'always' }
+        }
+    ]
 };
