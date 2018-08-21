@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const process = require('process');
 const inquirer = require('inquirer');
 const { red } = require('chalk');
