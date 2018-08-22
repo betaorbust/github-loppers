@@ -28,6 +28,8 @@ npx https://github.com/betaorbust/github-loppers   # Run the utility
 which will temporarily fetch the dependencies and run `github-loppers` so you
 can either list out or delete your stale branches.
 
+![Demo of running "npx https://github.com/betaorbust/github-loppers"](./demo.gif)
+
 ### Requirements:
 
 -   Node > 7.6 (async/await)
