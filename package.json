@@ -1,6 +1,6 @@
 {
     "name": "github-loppers",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "List or delete local squash-merged git branches. Cleans up that Github mess!",
     "main": "index.js",
     "bin": "index.js",
