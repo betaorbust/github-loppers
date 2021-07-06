@@ -32,7 +32,7 @@ can either list out or delete your stale branches.
 
 ### Requirements:
 
--   Node > 7.6 (async/await)
+-   Node > 10
 -   Git
 -   That the mainline branch your checking against is checked out locally.
 
