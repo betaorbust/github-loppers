@@ -15,8 +15,8 @@
  */
 
 'use strict';
-const childProcess = require('child_process');
-const assert = require('assert');
+import { spawn } from 'child_process';
+import assert from 'assert';
 
 const log = console.log;
 
@@ -45,19 +45,18 @@ async function asyncFilter(array, callback) {
  */
 async function git(args) {
     return new Promise((resolve, reject) => {
-        const child = childProcess.spawn('git', args);
+        const child = spawn('git', args);
 
         let stdout = '';
         let stderr = '';
 
-        child.stdout.on('data', data => (stdout += data));
-        child.stderr.on('data', data => (stderr += data));
+        child.stdout.on('data', (data) => (stdout += data));
+        child.stderr.on('data', (data) => (stderr += data));
 
-        child.on(
-            'close',
-            exitCode => (exitCode ? reject(stderr) : resolve(stdout))
+        child.on('close', (exitCode) =>
+            exitCode ? reject(stderr) : resolve(stdout)
         );
-    }).then(stdout => stdout.replace(/\n$/, ''));
+    }).then((stdout) => stdout.replace(/\n$/, ''));
 }
 
 /**
@@ -95,7 +94,7 @@ async function deleteSquashedMergedBranches(
 
     const branchesToDelete = await asyncFilter(
         branchNames,
-        async branchName => {
+        async (branchName) => {
             try {
                 const [ancestorHash, treeId] = await Promise.all([
                     git(['merge-base', baseBranchName, branchName]),
@@ -129,7 +128,7 @@ async function deleteSquashedMergedBranches(
         if (branchesToDelete.length === 0) {
             log('No local branches can be safely removed.');
         } else {
-            branchesToDelete.forEach(branch => {
+            branchesToDelete.forEach((branch) => {
                 log(branch);
             });
             log('\n\n To delete these, you can run the following:');
@@ -137,11 +136,11 @@ async function deleteSquashedMergedBranches(
         }
     } else {
         await git(['checkout', baseBranchName]);
-        asyncForEach(branchesToDelete, async branchName => {
+        asyncForEach(branchesToDelete, async (branchName) => {
             const deleted = await git(['branch', '-D', branchName]);
             log(deleted);
             return deleted;
         });
     }
 }
-module.exports = deleteSquashedMergedBranches;
+export default deleteSquashedMergedBranches;

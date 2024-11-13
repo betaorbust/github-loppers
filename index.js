@@ -1,16 +1,16 @@
 #!/usr/bin/env node
 
-const process = require('process');
-const inquirer = require('inquirer');
-const { red } = require('chalk');
-const simpleGit = require('simple-git/promise')(process.cwd());
-console.log(process.cwd());
-const deleteSquashMergedBranches = require('./delete-squashed-merged-branches');
+import { cwd } from 'process';
+import inquirer from 'inquirer';
+import chalk from 'chalk';
+import { simpleGit as git } from 'simple-git';
+import autoComplete from 'inquirer-autocomplete-prompt';
 
-inquirer.registerPrompt(
-    'autocomplete',
-    require('inquirer-autocomplete-prompt')
-);
+const simpleGit = git(cwd());
+console.log(cwd());
+import deleteSquashMergedBranches from './delete-squashed-merged-branches.js';
+
+inquirer.registerPrompt('autocomplete', autoComplete);
 
 const run = async () => {
     const branchInfo = await simpleGit.branch();
@@ -19,15 +19,17 @@ const run = async () => {
         {
             type: 'autocomplete',
             name: 'baseBranch',
-            message: `Pick your ${red(
+            message: `Pick your ${chalk.red(
                 'base branch'
-            )}. We'll check if your feature branches can be deleted based on if their changesets are found in the ${red(
+            )}. We'll check if your feature branches can be deleted based on if their changesets are found in the ${chalk.red(
                 'base branch'
             )}.`,
-            source: function(answersSoFar, input) {
+            source: function (answersSoFar, input) {
                 return Promise.resolve(
                     input
-                        ? branches.filter(branch => branch.indexOf(input) > -1)
+                        ? branches.filter(
+                              (branch) => branch.indexOf(input) > -1
+                          )
                         : branches
                 );
             }
@@ -50,3 +52,5 @@ const run = async () => {
 };
 
 run();
+
+export default run;
