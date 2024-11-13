@@ -51,11 +51,11 @@ can either list out or delete your stale branches.
 
 ### Requirements:
 
--   Node > 10
+-   Node >= 18.18.0
 -   Git
 -   That the mainline branch your checking against is checked out locally.
 
 ### Acknowledgments
 
 Git logic from @not-an-aardvark's awesome
-[bluebird-based implementation](https://github.com/not-an-aardvark/git-delete-squashed).
+[implementation](https://github.com/not-an-aardvark/git-delete-squashed).
