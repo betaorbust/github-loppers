@@ -114,7 +114,7 @@ async function deleteSquashedMergedBranches(
                     danglingCommitId
                 ]);
                 return output.startsWith('-');
-            } catch (err) {
+            } catch {
                 log(
                     `ERROR RUNNING ANALYSIS ON BRANCH "${branchName}". SKIPPING.`
                 );
