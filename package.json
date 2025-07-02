@@ -6,11 +6,7 @@
     "bin": {
         "github-loppers": "dist/index.js"
     },
-    "files": [
-        "dist",
-        "README.md",
-        "LICENSE"
-    ],
+    "files": ["dist", "README.md", "LICENSE"],
     "engines": {
         "node": ">=18.18.0"
     },
@@ -22,14 +18,9 @@
         "type": "git",
         "url": "git+https://github.com/betaorbust/github-loppers.git"
     },
-    "keywords": [
-        "github",
-        "squashed",
-        "branch",
-        "clean"
-    ],
+    "keywords": ["github", "squashed", "branch", "clean"],
     "author": "Jacques Favreau (@betaorbust)",
-    "license": "MIT",
+    "license": "Hippocratic-3.0",
     "bugs": {
         "url": "https://github.com/betaorbust/github-loppers/issues"
     },
