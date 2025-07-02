@@ -1,7 +1,7 @@
 # Delete Squash-merged local Git Branches
 
-![NPM Version](https://img.shields.io/npm/v/%40betaorbust%2Fgithub-loppers)
-[![Hippocratic License HL3-FULL](https://img.shields.io/static/v1?label=Hippocratic%20License&message=HL3-FULL&labelColor=5e2751&color=bc8c3d)](https://firstdonoharm.dev/version/3/0/full.html)
+<!-- prettier-ignore -->
+[![NPM Version](https://img.shields.io/npm/v/%40betaorbust%2Fgithub-loppers)](https://www.npmjs.com/package/@betaorbust/github-loppers) [![Hippocratic License HL3-FULL](https://img.shields.io/static/v1?label=Hippocratic%20License&message=HL3-FULL&labelColor=5e2751&color=bc8c3d)](https://github.com/betaorbust/github-loppers/blob/release/LICENSE)
 
 ![Shock at "git branches"](https://i.imgur.com/kua2UNA.gif)
 
@@ -31,7 +31,7 @@ delete them.
     - See if the temp commit contents was already applied to upstream
         - `git cherry <BaseBranch> <TempPatchSha>`
     - If the above output starts with `-` the branch is a candidate for deletion
-      </details>
+          </details>
 
 ### Usage:
 
