@@ -16,21 +16,19 @@ delete them.
 <details>
 <summary>Explanation of what's going on under the hood</summary>
 
--   Gets the branch list by name
-    -   `git for-each-ref refs/heads/ --format=%(refname:short)`
--   Then for each branch found:
-    -   Find the ancestor commit where ThisBranch left BaseBranch
-        -   `git merge-base <BaseBranch> <ThisBranch>`
-    -   Get the tree ID
-        -   `git rev-parse <ThisBranch>^{tree}`
-    -   Make up a temporary commit with the contents ThisBranch squashed
-        together
-        -   `git commit-tree <TreeID> -p <AncestorSha> -m "Temp <ThisBranch>"`
-    -   See if the temp commit contents was already applied to upstream
-        -   `git cherry <BaseBranch> <TempPatchSha>`
-    -   If the above output starts with `-` the branch is a candidate for
-    deletion
-    </details>
+- Gets the branch list by name
+    - `git for-each-ref refs/heads/ --format=%(refname:short)`
+- Then for each branch found:
+    - Find the ancestor commit where ThisBranch left BaseBranch
+        - `git merge-base <BaseBranch> <ThisBranch>`
+    - Get the tree ID
+        - `git rev-parse <ThisBranch>^{tree}`
+    - Make up a temporary commit with the contents ThisBranch squashed together
+        - `git commit-tree <TreeID> -p <AncestorSha> -m "Temp <ThisBranch>"`
+    - See if the temp commit contents was already applied to upstream
+        - `git cherry <BaseBranch> <TempPatchSha>`
+    - If the above output starts with `-` the branch is a candidate for deletion
+      </details>
 
 ### Usage:
 
@@ -51,9 +49,9 @@ can either list out or delete your stale branches.
 
 ### Requirements:
 
--   Node >= 18.18.0
--   Git
--   That the mainline branch your checking against is checked out locally.
+- Node >= 18.18.0
+- Git
+- That the mainline branch your checking against is checked out locally.
 
 ### Acknowledgments
 

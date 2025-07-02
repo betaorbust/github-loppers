@@ -1,6 +1,5 @@
 /**
  * @author Jacques Favreau (@betaorbust)
- * @version 1.0.0
  * @overview A no-dependency node utility to delete branches that have already
  * been merged into a mainline via the squash-merge strategy. (Frequently [used
  * on Github](https://blog.github.com/2016-04-01-squash-your-commits/).)
@@ -21,30 +20,42 @@ import assert from 'assert';
 const log = console.log;
 
 // A set of async helper functions for working with arrays
-async function asyncForEach(array, callback) {
+async function asyncForEach<T>(
+    array: T[],
+    callback: (item: T, index: number, array: T[]) => Promise<any> | any
+): Promise<void> {
     for (let index = 0; index < array.length; index++) {
-        await callback(array[index], index, array);
+        const item = array[index];
+        if (item !== undefined) {
+            await callback(item, index, array);
+        }
     }
 }
 
-async function asyncMap(array, callback) {
+async function asyncMap<T, U>(
+    array: T[],
+    callback: (item: T, index: number, array: T[]) => Promise<U> | U
+): Promise<U[]> {
     return Promise.all(array.map(callback));
 }
 
-async function asyncFilter(array, callback) {
+async function asyncFilter<T>(
+    array: T[],
+    callback: (item: T, index: number, array: T[]) => Promise<boolean> | boolean
+): Promise<T[]> {
     const transformedValues = await asyncMap(array, callback);
-    return array.filter((element, index) => {
+    return array.filter((_, index) => {
         return !!transformedValues[index];
     });
 }
 
 /**
  * Calls `git` with the given arguments from the CWD
- * @param {string[]} args A list of arguments
- * @returns {Promise<string>} The output from `git`
+ * @param  A list of arguments
+ * @returns The output from `git`
  */
-async function git(args) {
-    return new Promise((resolve, reject) => {
+async function git(args: string[]) {
+    return new Promise<string>((resolve, reject) => {
         const child = spawn('git', args);
 
         let stdout = '';
@@ -66,7 +77,7 @@ async function git(args) {
  * @returns {promise}              Promise that resolves when everything is done.
  */
 async function deleteSquashedMergedBranches(
-    baseBranchName,
+    baseBranchName: string,
     actuallyDoIt = false
 ) {
     assert(

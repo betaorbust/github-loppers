@@ -1,27 +1,24 @@
 {
-    "name": "github-loppers",
+    "name": "@betaorbust/github-loppers",
     "version": "1.0.1",
     "description": "List or delete local squash-merged git branches. Cleans up that Github mess!",
     "type": "module",
     "bin": {
-        "github-loppers": "./index.js"
+        "github-loppers": "./dist/index.js"
     },
+    "files": ["dist", "README.md", "LICENSE"],
     "engines": {
         "node": ">=18.18.0"
     },
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "build": "tsc",
+        "format": "prettier --write ."
     },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/betaorbust/github-loppers.git"
     },
-    "keywords": [
-        "github",
-        "squashed",
-        "branch",
-        "clean"
-    ],
+    "keywords": ["github", "squashed", "branch", "clean"],
     "author": "Jacques Favreau (@betaorbust)",
     "license": "MIT",
     "bugs": {
@@ -29,13 +26,18 @@
     },
     "homepage": "https://github.com/betaorbust/github-loppers#readme",
     "dependencies": {
-        "chalk": "^5.3.0",
-        "inquirer": "^9.1.0",
-        "inquirer-autocomplete-prompt": "^3.0.1",
-        "simple-git": "^3.27.0"
+        "@types/node": "^24.0.10",
+        "chalk": "^5.4.1",
+        "inquirer": "^12.7.0",
+        "prompts": "^2.4.2",
+        "simple-git": "^3.28.0"
     },
     "devDependencies": {
+        "@tsconfig/strictest": "^2.0.5",
+        "@types/prompts": "^2.4.9",
         "eslint": "^9.14.0",
-        "globals": "^15.12.0"
+        "globals": "^15.12.0",
+        "prettier": "^3.6.2",
+        "typescript": "^5.8.3"
     }
 }
