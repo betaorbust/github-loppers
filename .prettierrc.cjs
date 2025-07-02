@@ -5,9 +5,6 @@ module.exports = {
     // Number of spaces it should use per tab
     tabWidth: 4,
 
-    // Use the flow parser instead of babylon
-    parser: 'flow',
-
     // If true, will use single instead of double quotes
     singleQuote: true,
 
@@ -21,6 +18,10 @@ module.exports = {
         {
             files: '*.md',
             options: { parser: 'markdown', proseWrap: 'always' }
+        },
+        {
+            files: '*.json',
+            options: { parser: 'json' }
         }
     ]
 };
