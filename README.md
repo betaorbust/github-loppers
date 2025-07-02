@@ -28,22 +28,22 @@ delete them.
     - See if the temp commit contents was already applied to upstream
         - `git cherry <BaseBranch> <TempPatchSha>`
     - If the above output starts with `-` the branch is a candidate for deletion
-      </details>
+          </details>
 
 ### Usage:
 
 **By default, this utility runs in dry mode. You will be prompted if you
 actually want to run any destructive changes.**
 
-The easiest way to use `github-loppers` is via NPX:
+The easiest way to use `@betaorbust/github-loppers` is via NPX:
 
 ```sh
-cd ~/code/myProject                                # Get to your local repo
-npx https://github.com/betaorbust/github-loppers   # Run the utility
+cd ~/code/myProject             # Get to your local repo
+npx @betaorbust/github-loppers   # Run the utility
 ```
 
-which will temporarily fetch the dependencies and run `github-loppers` so you
-can either list out or delete your stale branches.
+which will `@betaorbust/github-loppers` directly so you can either list out or
+delete your stale branches.
 
 ![Demo of running "npx https://github.com/betaorbust/github-loppers"](./demo.gif)
 
