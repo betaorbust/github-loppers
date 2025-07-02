@@ -4,7 +4,7 @@
     "description": "List or delete local squash-merged git branches. Cleans up that Github mess!",
     "type": "module",
     "bin": {
-        "github-loppers": "./dist/index.js"
+        "github-loppers": "dist/index.js"
     },
     "files": ["dist", "README.md", "LICENSE"],
     "engines": {
