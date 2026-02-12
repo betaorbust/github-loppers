@@ -4,14 +4,15 @@
     "description": "List or delete local squash-merged git branches. Cleans up that Github mess!",
     "type": "module",
     "bin": {
-        "github-loppers": "dist/index.js"
+        "github-loppers": "node --experimental-strip-types ./src/index.ts"
     },
     "files": ["dist", "README.md", "LICENSE"],
     "engines": {
-        "node": ">=24.0.0"
+        "node": ">=22.18.0"
     },
     "scripts": {
-        "build": "tsc",
+        "run": "node --experimental-strip-types ./src/index.ts",
+        "check": "eslint ./src --ext .ts && tsc",
         "format": "prettier --write ."
     },
     "repository": {
@@ -26,14 +27,15 @@
     },
     "homepage": "https://github.com/betaorbust/github-loppers#readme",
     "dependencies": {
+        "@clack/prompts": "^1.0.0",
+        "@tsconfig/strictest": "^2.0.8",
         "@types/node": "^24.0.10",
         "chalk": "^5.6.2",
-        "prompts": "^2.4.2",
         "simple-git": "^3.30.0"
     },
     "devDependencies": {
-        "@tsconfig/strictest": "^2.0.8",
-        "@types/prompts": "^2.4.9",
+        "@typescript-eslint/eslint-plugin": "^8.55.0",
+        "@typescript-eslint/parser": "^8.55.0",
         "eslint": "^9.30.1",
         "globals": "^17.3.0",
         "prettier": "^3.8.1",

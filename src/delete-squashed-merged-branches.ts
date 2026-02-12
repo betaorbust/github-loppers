@@ -12,41 +12,17 @@
  * https://github.com/not-an-aardvark/git-delete-squashed
  *
  */
-
-'use strict';
 import { spawn } from 'child_process';
 import assert from 'assert';
-
-const log = console.log;
-
-// A set of async helper functions for working with arrays
-async function asyncForEach<T>(
-    array: T[],
-    callback: (item: T, index: number, array: T[]) => Promise<any> | any
-): Promise<void> {
-    for (let index = 0; index < array.length; index++) {
-        const item = array[index];
-        if (item !== undefined) {
-            await callback(item, index, array);
-        }
-    }
-}
-
-async function asyncMap<T, U>(
-    array: T[],
-    callback: (item: T, index: number, array: T[]) => Promise<U> | U
-): Promise<U[]> {
-    return Promise.all(array.map(callback));
-}
+import * as p from '@clack/prompts';
+import chalk from 'chalk';
 
 async function asyncFilter<T>(
     array: T[],
     callback: (item: T, index: number, array: T[]) => Promise<boolean> | boolean
 ): Promise<T[]> {
-    const transformedValues = await asyncMap(array, callback);
-    return array.filter((_, index) => {
-        return !!transformedValues[index];
-    });
+    const results = await Promise.all(array.map(callback));
+    return array.filter((_, index) => results[index]);
 }
 
 /**
@@ -126,32 +102,41 @@ async function deleteSquashedMergedBranches(
                 ]);
                 return output.startsWith('-');
             } catch {
-                log(
+                p.log.error(
                     `ERROR RUNNING ANALYSIS ON BRANCH "${branchName}". SKIPPING.`
                 );
-                return Promise.resolve(false);
+                return false;
             }
         }
     );
-
-    if (!actuallyDoIt) {
-        log('Listing branches to delete:');
-        if (branchesToDelete.length === 0) {
-            log('No local branches can be safely removed.');
-        } else {
-            branchesToDelete.forEach((branch) => {
-                log(branch);
-            });
-            log('\n\n To delete these, you can run the following:');
-            log(`git branch -D ${branchesToDelete.join(' ')}`);
-        }
+    if (branchesToDelete.length === 0) {
+        p.log.warn('No squash-merged branches found. Nothing to delete.');
+    } else if (!actuallyDoIt) {
+        p.note(
+            branchesToDelete.map((branch) => `  ${branch}`).join('\n'),
+            'List of branches to delete:'
+        );
+        p.log.info(
+            'To delete these branches, you can run the following command:'
+        );
+        p.log.info(
+            chalk.bold(`   git branch -D ${branchesToDelete.join(' ')}
+`),
+            { withGuide: false }
+        );
     } else {
         await git(['checkout', baseBranchName]);
-        asyncForEach(branchesToDelete, async (branchName) => {
+        const task = p.taskLog({
+            title: 'Deleting branches...'
+        });
+        for (const branchName of branchesToDelete) {
             const deleted = await git(['branch', '-D', branchName]);
-            log(deleted);
-            return deleted;
+            task.message(deleted);
+        }
+        task.success(`${chalk.bold('Success:')} Identified branches deleted!`, {
+            showLog: true
         });
     }
+    p.outro('Done! 🎉');
 }
 export default deleteSquashedMergedBranches;
