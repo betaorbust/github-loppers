@@ -31,7 +31,7 @@ delete them.
     - See if the temp commit contents was already applied to upstream
         - `git cherry <BaseBranch> <TempPatchSha>`
     - If the above output starts with `-` the branch is a candidate for deletion
-        </details>
+          </details>
 
 ### Usage:
 
@@ -52,7 +52,7 @@ delete your stale branches.
 
 ### Requirements:
 
-- Node >= 22.18.0
+- Node >= 22.6.0
 - Git
 - That the mainline branch your checking against is checked out locally.
 

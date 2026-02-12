@@ -8,7 +8,7 @@
     },
     "files": ["dist", "README.md", "LICENSE"],
     "engines": {
-        "node": ">=22.18.0"
+        "node": ">=22.6.0"
     },
     "scripts": {
         "run": "node --experimental-strip-types ./src/index.ts",
