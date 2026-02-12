@@ -1,26 +1,21 @@
 # This workflow will run build and then publish a package to GitHub Packages when a release is created
-# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
-
-name: Node.js Package
-
+# using OIDC. See https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect
+# and https://docs.npmjs.com/trusted-publishers for more details.
+name: Publish to NPM
 on:
     release:
         types: [created]
-
+permissions:
+    id-token: write # Required for OIDC
+    contents: read
 jobs:
-    publish-npm:
+    publish:
         runs-on: ubuntu-latest
-        permissions:
-            contents: read
-            id-token: write
         steps:
             - uses: actions/checkout@v4
             - uses: actions/setup-node@v4
               with:
-                  node-version: 20
-                  registry-url: https://registry.npmjs.org/
-            - run: npm ci
-            - run: npm run build
+                  node-version: '24'
+                  registry-url: 'https://registry.npmjs.org'
+            - run: npm run check
             - run: npm publish --provenance --access public
-              env:
-                  NODE_AUTH_TOKEN: ${{secrets.npm_token}}
