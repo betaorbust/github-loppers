@@ -1,12 +1,16 @@
 {
     "name": "@betaorbust/github-loppers",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "description": "List or delete local squash-merged git branches. Cleans up that Github mess!",
     "type": "module",
     "bin": {
         "github-loppers": "./dist/index.js"
     },
-    "files": ["dist", "README.md", "LICENSE"],
+    "files": [
+        "dist",
+        "README.md",
+        "LICENSE"
+    ],
     "engines": {
         "node": ">=22.0.0"
     },
@@ -20,7 +24,12 @@
         "type": "git",
         "url": "git+https://github.com/betaorbust/github-loppers.git"
     },
-    "keywords": ["github", "squashed", "branch", "clean"],
+    "keywords": [
+        "github",
+        "squashed",
+        "branch",
+        "clean"
+    ],
     "author": "Jacques Favreau (@betaorbust)",
     "license": "Hippocratic-3.0",
     "bugs": {
