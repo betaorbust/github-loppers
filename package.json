@@ -1,6 +1,6 @@
 {
     "name": "@betaorbust/github-loppers",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "List or delete local squash-merged git branches. Cleans up that Github mess!",
     "type": "module",
     "bin": {
