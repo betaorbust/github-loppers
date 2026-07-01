@@ -1,10 +1,10 @@
-#!/usr/bin/env -S node --experimental-strip-types
+#!/usr/bin/env node
 
 import { cwd, exit } from 'node:process';
 import chalk from 'chalk';
 import { simpleGit as git } from 'simple-git';
 import * as p from '@clack/prompts';
-import deleteSquashMergedBranches from './delete-squashed-merged-branches.ts';
+import deleteSquashMergedBranches from './delete-squashed-merged-branches.js';
 
 const run = async () => {
     const simpleGit = git(cwd());

@@ -19,4 +19,5 @@ jobs:
                   registry-url: 'https://registry.npmjs.org'
             - run: npm ci
             - run: npm run check
+            # The `dist/` build is handled by the package's `prepublishOnly` script.
             - run: npm publish --provenance --access public
